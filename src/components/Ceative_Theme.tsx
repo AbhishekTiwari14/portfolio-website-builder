@@ -7,6 +7,8 @@ import Theme2ProjectCard from "./Theme2ProjectCard"
 import Theme2Footer from "./Theme2Footer"
 import { useSelector } from "react-redux"
 import { getActiveColors } from "@/lib/themeConfig"
+import { RootState } from "@/utils/store"
+import { usePanelWidth } from "@/hooks/usePanelWidth"
 
 const greetings = [
   "Hello",
@@ -24,6 +26,7 @@ const greetings = [
 export default function Creative_Theme() {
   const [index, setIndex] = useState(0)
   const [showEffect, setShowEffect] = useState(true)
+  const userData = useSelector((state: RootState) => state.userData.data)
 
   useEffect(() => {
     if (index < greetings.length) {
@@ -39,6 +42,9 @@ export default function Creative_Theme() {
   }, [index])
 
   const colors = useSelector(getActiveColors)
+  const { elementRef, currentBreakpoint } = usePanelWidth()
+
+  const isLargePanel = currentBreakpoint === "lg" || currentBreakpoint === "xl"
 
   return (
     <div className={`h-full w-full bg-${colors.bg2}`}>
@@ -72,7 +78,7 @@ export default function Creative_Theme() {
               transition={{ duration: 1, damping: 0.3 }}
               className="text-2xl sm:text-4xl md:text-6xl lg:text-8xl font-bold text-center space tracking-wider text-white"
             >
-              ABHISHEK TIWARI
+              {userData.firstName ? userData.firstName : "ABHISHEK TIWARI"}
             </motion.h1>
             <motion.h3
               initial={{ y: 20, opacity: 0 }}

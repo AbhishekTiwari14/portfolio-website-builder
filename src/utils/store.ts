@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit"
 import themeSlice from "./slices/themeSlice"
 import githubSlice from "./slices/githubSlice"
+import userDataSlice from "./slices/userDataSlice"
 
 const store = configureStore({
   reducer: {
     github: githubSlice,
     theme: themeSlice,
+    userData: userDataSlice,
   },
 })
 

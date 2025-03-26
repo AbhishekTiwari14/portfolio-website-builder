@@ -1,8 +1,13 @@
 import { getActiveColors } from "@/lib/themeConfig"
 import { useSelector } from "react-redux"
 
-export default function Theme1ProjectCard() {
-
+export default function Theme1ProjectCard({
+  title,
+  description,
+}: {
+  title?: string
+  description?: string
+}) {
   const colors = useSelector(getActiveColors)
   return (
     <div
@@ -19,13 +24,21 @@ export default function Theme1ProjectCard() {
         <p
           className={`font-semibold text-md ${colors.primary} ${colors.groupHover}`}
         >
-          Movie Ticket Booking App
+          {title ? title : "Movie Ticket Booking App"}
         </p>
         <p
           className={`${colors.secondary} group-hover:${colors.primary} text-sm`}
         >
-          Built a realtime movie ticket booking web-app which can handle
-          concurrent bookings.
+          {description ? (
+            <div
+              // className={`${colors.secondary} ${
+              //   isLargePanel ? "text-xl font-medium" : ""
+              // }`}
+              dangerouslySetInnerHTML={{ __html: description }}
+            />
+          ) : (
+            "Built a realtime movie ticket booking web-app which can handle concurrent bookings."
+          )}
         </p>
 
         <div className="flex flex-wrap gap-2">

@@ -1,28 +1,52 @@
 import { getActiveColors } from "@/lib/themeConfig"
 import { useSelector } from "react-redux"
 
-export default function Theme1ExperienceCard() {
+export default function Theme1ExperienceCard({
+  fromYear,
+  toYear,
+  designation,
+  company,
+  workSummary,
+}: {
+  fromYear?: string
+  toYear?: string
+  designation?: string
+  company?: string
+  workSummary?: string
+}) {
   const colors = useSelector(getActiveColors)
   return (
     <div
       className={`flex flex-col lg:flex-row lg:gap-8 lg:p-4 ${colors.cardHover} hover:shadow-md hover:cursor-pointer group rounded-md justify-start`}
     >
       <p className={`${colors.secondary} text-sm font-light whitespace-nowrap`}>
-        2024-PRESENT
+        {fromYear ? fromYear : "2024"}-{toYear ? toYear : "PRESENT"}
       </p>
       <div className="flex flex-col justify-between gap-4">
         <p
           className={`font-semibold text-md ${colors.primary} ${colors.groupHover}`}
         >
-          Senior Frontend Engineer, Accessibility · Klaviyo
+          {designation
+            ? designation
+            : "Senior Frontend Engineer, Accessibility"}{" "}
+          · {company ? company : "Klaviyo"}
         </p>
         <p
           className={`${colors.secondary} group-hover:${colors.primary} text-sm`}
         >
-          Build and maintain critical components used to construct Klaviyo’s
+          {workSummary ? (
+            <div
+              // className={`${colors.secondary} ${
+              //   isLargePanel ? "text-xl font-medium" : ""
+              // }`}
+              dangerouslySetInnerHTML={{ __html: workSummary }}
+            />
+          ) : (
+            `Build and maintain critical components used to construct Klaviyo’s
           frontend, across the whole product. Work closely with cross-functional
           teams, including developers, designers, and product managers, to
-          implement and advocate for best practices in web accessibility.
+          implement and advocate for best practices in web accessibility.`
+          )}
         </p>
 
         <div className="flex flex-wrap gap-2">

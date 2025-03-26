@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react"
 import { motion } from "motion/react"
 import { BackgroundStars } from "./BackgroundStars"
+import { Link } from "react-router-dom"
 
 export default function Hero() {
   return (
@@ -42,29 +43,27 @@ export default function Hero() {
             DevFolio
           </h1>
           <p className="text-2xl text-slate-200 mb-4 tracking-tight">
-            Code Less, Showcase More!
+            No Code Portfoilio Website Builder
           </p>
           <p className="text-xl text-slate-400 mb-8 max-w-2xl text-center mx-2">
             Create stunning developer portfolios in minutes. Choose from our
             professionally designed templates and make them yours.
           </p>
-          <div className="flex gap-4 justify-center">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg flex items-center gap-2 hover:cursor-pointer"
-            >
-              Get Started <ArrowRight className="w-5 h-5" />
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              className="bg-slate-800 hover:bg-slate-900 text-white px-8 py-3 rounded-lg flex items-center gap-2 hover:cursor-pointer"
-            >
-              View Templates
-            </motion.button>
+          <div className="flex justify-center">
+            <Link to={"/themes"}>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 10,
+                }}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg flex items-center gap-2 hover:cursor-pointer"
+              >
+                Get Started <ArrowRight className="w-5 h-5" />
+              </motion.button>
+            </Link>
           </div>
         </motion.div>
       </div>

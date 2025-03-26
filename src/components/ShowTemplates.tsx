@@ -13,6 +13,8 @@ import { setPalette, setTheme } from "@/utils/slices/themeSlice"
 import { RootState } from "@/utils/store"
 import PalettePicker from "./PalettePicker"
 import { themes } from "@/lib/themeConfig"
+import { Link } from "react-router-dom"
+import { Button } from "./ui/button"
 
 export default function ShowTemplates() {
   const dispatch = useDispatch()
@@ -70,6 +72,9 @@ export default function ShowTemplates() {
             </SelectContent>
           </Select>
         </div>
+        <Link to="/pane" className="flex justify-end">
+          <Button className="self-end">Proceed</Button>
+        </Link>
       </div>
       {currentTheme === "creative" && <Creative_Theme />}
       {currentTheme === "minimalist" && <Minimalist_Theme />}

@@ -3,26 +3,44 @@ import Theme1ExperienceCard from "./Theme1ExperienceCard"
 import Theme1ProjectCard from "./Theme1ProjectCard"
 import { useSelector } from "react-redux"
 import { getActiveColors } from "@/lib/themeConfig"
+import { RootState } from "@/utils/store"
+import { usePanelWidth } from "../hooks/usePanelWidth"
 
 export default function Minimalist_Theme() {
-
   const colors = useSelector(getActiveColors)
+  const userData = useSelector((state: RootState) => state?.userData?.data)
+  const { elementRef, currentBreakpoint } = usePanelWidth()
+
+  const isLargePanel = currentBreakpoint === "lg" || currentBreakpoint === "xl"
 
   return (
     <div
-      className={`min-h-screen w-full flex flex-col lg:grid grid-cols-2 px-8 lg:px-16 ${colors.bg}`}
+      ref={elementRef}
+      className={`min-h-screen w-full flex flex-col px-8 ${
+        isLargePanel ? "grid grid-cols-2" : ""
+      } ${colors.bg}`}
     >
       <div
-        className={`flex flex-col ${colors.primary} py-16 lg:sticky lg:top-0 lg:justify-between lg:h-screen lg:max-w-3/5`}
+        className={`flex flex-col ${colors.primary} py-16 ${
+          isLargePanel
+            ? "sticky top-0 justify-between h-screen max-w-3/5 p-2"
+            : ""
+        }`}
       >
         <div className="flex flex-col gap-2">
-          <p className="font-bold text-4xl">Abhishek Tiwari</p>
-          <p className="font-semibold text-xl">Front End Engineer</p>
-          <p className={`font-medium text-md pt-1 ${colors.secondary}`}>
-            I build accessible, pixel-perfect digital experiences for the web.
+          <p className="font-bold text-4xl">
+            {userData.fullName ? userData.fullName : "ABHISHEK TIWARI"}
+          </p>
+          <p className="font-semibold text-xl">
+            {userData.title ? userData.title : "Front End Engineer"}
+          </p>
+          <p className={`font-medium text-md py-2  ${colors.secondary}`}>
+            {userData.description
+              ? userData.description
+              : "I build accessible, pixel-perfect digital experiences for the web."}
           </p>
         </div>
-        <div className="hidden lg:flex flex-col gap-3">
+        <div className={`${isLargePanel ? "flex" : "hidden"} flex-col gap-3`}>
           <a
             className="flex gap-1 items-center hover:cursor-pointer group active"
             href="#about"
@@ -58,7 +76,7 @@ export default function Minimalist_Theme() {
             </span>
           </a>
         </div>
-        <div className=" flex gap-6 items-center">
+        <div className="flex gap-6 items-center pt-2 pb-4">
           <Link to={"/"}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -122,41 +140,75 @@ export default function Minimalist_Theme() {
           </Link>
         </div>
       </div>
-      <div className="flex flex-col gap-6 text-white lg:py-16" id="about">
-        <div className="h-screen text-gray-400 block">
-          <p className="block lg:hidden mb-6 font-semibold text-md text-white">
+      <div
+        className={`flex flex-col gap-6 text-white ${
+          isLargePanel ? "py-16" : ""
+        }`}
+        id="about"
+      >
+        <div
+          className={`text-gray-400 block ${isLargePanel ? "h-screen" : ""}`}
+        >
+          <p
+            className={`${
+              !isLargePanel ? "block" : "hidden"
+            } mb-6 font-semibold text-md text-white`}
+          >
             ABOUT
           </p>
-          <p className={`${colors.secondary}`}>
-            Front End Engineer I build accessible, pixel-perfect digital
-            experiences for the web. About Experience Projects GitHub LinkedIn
-            CodePen Instagram Goodreads About I’m a developer passionate about
-            crafting accessible, pixel-perfect user interfaces that blend
-            thoughtful design with robust engineering. My favorite work lies at
-            the intersection of design and development, creating experiences
-            that not only look great but are meticulously built for performance
-            and usability. Currently, I'm a Senior Front-End Engineer at
-            Klaviyo, specializing in accessibility. I contribute to the creation
-            and maintenance of UI components that power Klaviyo’s frontend,
-            ensuring our platform meets web accessibility standards and best
-            practices to deliver an inclusive user experience. In the past, I've
-            had the opportunity to develop software across a variety of settings
-            — from advertising agencies and large corporations to start-ups and
-            small digital product studios. Additionally, I also released a
-            comprehensive video course a few years ago, guiding learners through
-            building a web app with the Spotify API.
-          </p>
+
+          {userData.about ? (
+            <div
+              className={`${colors.secondary} ${
+                isLargePanel ? "text-xl font-medium" : ""
+              }`}
+              dangerouslySetInnerHTML={{ __html: userData.about }}
+            />
+          ) : (
+            <p
+              className={`text-lg ${colors.secondary} ${
+                isLargePanel
+                  ? "font-medium leading-8 tracking-wider"
+                  : "leading-7"
+              }`}
+            >
+              I'm a developer passionate about crafting accessible,
+              pixel-perfect user interfaces that blend thoughtful design with
+              robust engineering. My favorite work lies at the intersection of
+              design and development, creating experiences that not only look
+              great but are meticulously built for performance and
+              usability.Currently, I'm a Senior Front-End Engineer at Klaviyo,
+              specializing in accessibility. I contribute to the creation and
+              maintenance of UI components that power Klaviyo's frontend,
+              ensuring our platform meets web accessibility standards and best
+              practices to deliver an inclusive user experience
+            </p>
+          )}
           <span>Logos of skills</span>
         </div>
         <div className="flex flex-col gap-8 group/link" id="experience">
-          <Theme1ExperienceCard />
-          <Theme1ExperienceCard />
-          <Theme1ExperienceCard />
+          {userData.experiences?.map((experience, index) => (
+            <Theme1ExperienceCard key={index} {...experience} />
+          ))}
+          {userData.experiences && (
+            <>
+              <Theme1ExperienceCard />
+              <Theme1ExperienceCard />
+              <Theme1ExperienceCard />
+            </>
+          )}
         </div>
-        <div className="flex flex-col gap-8 mt-44" id="projects">
-          <Theme1ProjectCard />
-          <Theme1ProjectCard />
-          <Theme1ProjectCard />
+        <div className="flex flex-col gap-8 mt-20 mb-40" id="projects">
+          {userData.projects?.map((projects, index) => (
+            <Theme1ProjectCard key={index} {...projects} />
+          ))}
+          {!userData.projects && (
+            <>
+              <Theme1ProjectCard />
+              <Theme1ProjectCard />
+              <Theme1ProjectCard />
+            </>
+          )}
         </div>
       </div>
     </div>
