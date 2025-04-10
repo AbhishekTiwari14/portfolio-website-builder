@@ -36,7 +36,9 @@ export default function SelectTechnologies() {
   // Toggle selection of a technology
   const addValue = (value: string) => {
     dispatch(
-      updateUserData({ Technologies: [...userData.Technologies, value] })
+      updateUserData({
+        Technologies: [...userData.Technologies, value],
+      })
     )
   }
   // Remove a technology from selection

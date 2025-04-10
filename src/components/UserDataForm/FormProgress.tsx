@@ -12,6 +12,7 @@ export function FormProgress() {
     { label: "Social Media Links", step: 1 },
     { label: "Contact Info", step: 2 },
     { label: "Preferences", step: 3 },
+    { label: "Generate Portfolio", step: 4 },
   ]
 
   return (

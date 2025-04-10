@@ -4,15 +4,27 @@ export const personalInfoSchema = z.object({
   fullName: z.string().min(3, "Name must be at least 3 characters"),
   title: z.string().min(2, "Title must be at least 2 characters"),
   description: z.string().min(2, "Description must be at least 10 characters"),
-  about: z.string().refine(
-    (text) => {
-      const wordCount = text.trim().split(/\s+/).filter(Boolean).length
-      return wordCount >= 100
-    },
-    {
-      message: "Summary must be at least 100 words long",
+  about: z.string().superRefine((text, ctx) => {
+    const wordCount = text.trim().split(/\s+/).filter(Boolean).length
+    if (wordCount < 100) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.too_small,
+        minimum: 100,
+        type: "string",
+        inclusive: true,
+        message: "Summary must be at least 100 words long.",
+      })
     }
-  ),
+    if (wordCount > 120) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.too_big,
+        maximum: 120,
+        type: "string",
+        inclusive: true,
+        message: "Summary must be at most 120 words long.",
+      })
+    }
+  }),
 })
 
 export const socialMediaLinksSchema = z.object({

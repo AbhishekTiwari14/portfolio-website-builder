@@ -115,7 +115,7 @@ export default function AboutData() {
               <FormControl>
                 <TiptapEditor
                   value={field.value}
-                  placeholder="Write a professional summary about yourself in more than 100 words"
+                  placeholder="Write a professional summary about yourself in 100-120 words"
                   onChange={(newContent) => {
                     field.onChange(newContent)
                     updateField({ about: newContent })

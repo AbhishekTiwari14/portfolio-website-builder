@@ -88,7 +88,7 @@ export default function Minimalist_Theme() {
               <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
             </svg>
           </Link>
-          <Link to={"/"}>
+          <Link to={userData.Github ? userData.Github : ""}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -172,21 +172,37 @@ export default function Minimalist_Theme() {
                   : "leading-7"
               }`}
             >
-              I'm a developer passionate about crafting accessible,
-              pixel-perfect user interfaces that blend thoughtful design with
-              robust engineering. My favorite work lies at the intersection of
-              design and development, creating experiences that not only look
-              great but are meticulously built for performance and
-              usability.Currently, I'm a Senior Front-End Engineer at Klaviyo,
-              specializing in accessibility. I contribute to the creation and
-              maintenance of UI components that power Klaviyo's frontend,
-              ensuring our platform meets web accessibility standards and best
-              practices to deliver an inclusive user experience
+              I'm a developer who creates accessible, pixel-perfect user
+              interfaces combining thoughtful design with solid engineering. My
+              passion lies where design meets development—building experiences
+              that are visually appealing while optimized for performance and
+              usability. I'm dedicated to crafting interfaces that not only look
+              great but function flawlessly, bridging the gap between aesthetics
+              and technical excellence while prioritizing accessibility
+              throughout the development process.
+              <br />
+              <br />
+              Currently serving as a Senior Front-End Engineer at Klaviyo with a
+              focus on accessibility, I help develop and maintain UI components
+              powering the platform's frontend. My work ensures our product
+              adheres to web accessibility standards and best practices,
+              creating an inclusive experience for all users.
             </p>
           )}
-          <span>Logos of skills</span>
         </div>
-        <div className="flex flex-col gap-8 group/link" id="experience">
+        <div
+          className={`flex flex-col gap-8 group/link ${
+            !isLargePanel ? "pt-16" : ""
+          }`}
+          id="experience"
+        >
+          <p
+            className={`${
+              !isLargePanel ? "block" : "hidden"
+            } mb-4 font-semibold text-md text-white`}
+          >
+            EXPERIENCE
+          </p>
           {userData.experiences?.map((experience, index) => (
             <Theme1ExperienceCard key={index} {...experience} />
           ))}
@@ -199,6 +215,13 @@ export default function Minimalist_Theme() {
           )}
         </div>
         <div className="flex flex-col gap-8 mt-20 mb-40" id="projects">
+          <p
+            className={`${
+              !isLargePanel ? "block" : "hidden"
+            } mb-4 font-semibold text-md text-white`}
+          >
+            PROJECTS
+          </p>
           {userData.projects?.map((projects, index) => (
             <Theme1ProjectCard key={index} {...projects} />
           ))}

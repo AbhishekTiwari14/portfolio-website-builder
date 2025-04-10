@@ -3,9 +3,10 @@ import { useSelector } from "react-redux"
 import AboutData from "./AboutData"
 import ExperienceData from "./ExperienceData"
 import ProjectsData from "./ProjectsData"
-import { UserIcon, MailIcon, Settings2Icon } from "lucide-react"
+import { UserIcon, MailIcon, Settings2Icon, FolderGit2 } from "lucide-react"
 import { FormProgress } from "./FormProgress"
 import SocialMediaLinks from "./SocialMediaLinks"
+import GeneratePortfolio from "./GeneratePortfolio"
 
 export default function FormStep() {
   const currentStep = useSelector(
@@ -16,11 +17,16 @@ export default function FormStep() {
     { component: <AboutData />, icon: UserIcon, title: "Personal Information" },
     {
       component: <SocialMediaLinks />,
-      icon: UserIcon,
+      icon: MailIcon,
       title: "Social Media Links",
     },
-    { component: <ExperienceData />, icon: MailIcon, title: "Experience" },
-    { component: <ProjectsData />, icon: Settings2Icon, title: "Projects" },
+    { component: <ExperienceData />, icon: Settings2Icon, title: "Experience" },
+    { component: <ProjectsData />, icon: FolderGit2, title: "Projects" },
+    {
+      component: <GeneratePortfolio />,
+      icon: Settings2Icon,
+      title: "Generate Portfolio Website",
+    },
   ]
 
   const StepIcon = steps[currentStep].icon

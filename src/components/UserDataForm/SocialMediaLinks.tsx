@@ -22,10 +22,17 @@ import {
 } from "@/lib/userDataTypes"
 import { RootState } from "@/utils/store"
 import SelectTechnologies from "./SelectTechnologies"
+import { useEffect, useState } from "react"
 
 export default function SocialMediaLinks() {
+  const [minSkillsSatisfied, setMinSkillsSatisfied] = useState(true)
+
   const dispatch = useDispatch()
   const userData = useSelector((state: RootState) => state.userData.data)
+
+  useEffect(() => {
+    if (userData?.Technologies?.length >= 5) setMinSkillsSatisfied(true)
+  }, [userData?.Technologies?.length])
 
   const form = useForm<socialMediaLinksData>({
     resolver: zodResolver(socialMediaLinksSchema),
@@ -43,8 +50,10 @@ export default function SocialMediaLinks() {
   }
 
   const onSubmit = (data: socialMediaLinksData) => {
-    // Ensure Technologies is always an array before submitting
-
+    if (userData.Technologies.length < 5) {
+      setMinSkillsSatisfied(false)
+      return
+    }
     dispatch(updateUserData(data))
     dispatch(nextStep())
   }
@@ -118,11 +127,18 @@ export default function SocialMediaLinks() {
           name="Technologies"
           render={() => (
             <FormItem>
-              <FormLabel>Technical Skills</FormLabel>
+              <FormLabel
+                className={`${!minSkillsSatisfied ? "text-red-600" : ""}`}
+              >
+                Technical Skills
+              </FormLabel>
               <FormControl>
                 <SelectTechnologies />
               </FormControl>
               <FormMessage />
+              {!minSkillsSatisfied && (
+                <p className="text-sm text-red-600">Add minimum 5 skills</p>
+              )}
             </FormItem>
           )}
         />
